@@ -1,32 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
-public class sayaTubeVideo
+public class SayaTubeVideo
 {
     private int id;
     private string title;
     private int playCount;
-    public sayaTubeVideo(string title)
+
+    public SayaTubeVideo(string title)
     {
-        Random random = new Random();
-        this.id = random.Next(10000, 99999);
+        Debug.Assert(title != null, "Judul video tidak boleh null");
+        Debug.Assert(title.Length <= 200, "Judul video tidak boleh lebih dari 200 karakter");
+
+        Random rand = new Random();
+        this.id = rand.Next(10000, 99999);
         this.title = title;
         this.playCount = 0;
     }
 
-    public int PlayCount { get; internal set; }
-
     public void IncreasePlayCount(int count)
     {
-        this.playCount += count;
+        Debug.Assert(count > 0, "Penambahan play count harus lebih dari 0");
+        Debug.Assert(count <= 25000000, "Penambahan play count maksimal 25.000.000");
+
+        try
+        {
+            checked
+            {
+                this.playCount += count;
+            }
+        }
+        catch (OverflowException)
+        {
+            Console.WriteLine("Error: Play count melebihi batas maksimum integer!");
+        }
     }
+
     public void PrintVideoDetails()
     {
-        Console.WriteLine($"Video ID : {id}");
-        Console.WriteLine($"Title : {title}");
-        Console.WriteLine($"Play Count : {playCount}");
+        Console.WriteLine($"ID: {id}");
+        Console.WriteLine($"Judul: {title}");
+        Console.WriteLine($"Jumlah Play: {playCount}\n");
+    }
+
+    public int GetPlayCount()
+    {
+        return playCount;
     }
 }

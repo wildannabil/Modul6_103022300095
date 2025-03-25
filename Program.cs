@@ -2,18 +2,20 @@
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        SayaTubeUser user = new SayaTubeUser("Wildan Nabil Ramdhany");
-        sayaTubeVideo sayaTubeavaideo1 = new sayaTubeVideo("Review Film 1 oleh Wildan Nabil Ramdhany");
-        sayaTubeVideo sayaTubeavaideo2 = new sayaTubeVideo("Review Film 2 oleh Wildan Nabil Ramdhany");
+        SayaTubeUser user = new SayaTubeUser("Eliyakim");
 
-        sayaTubeavaideo1.IncreasePlayCount(100);
-        sayaTubeavaideo2.IncreasePlayCount(200);
 
-        user.AddVideo(sayaTubeavaideo1);
-        user.AddVideo(sayaTubeavaideo2);
+        for (int i = 1; i <= 10; i++)
+        {
+            SayaTubeVideo video = new SayaTubeVideo($"Review Film {i} oleh Eliyakim");
+            video.IncreasePlayCount(100000); 
+            user.AddVideo(video);
+        }
 
-        user.PrintAllVideoPlaycount();
+        Console.WriteLine("\nDetail Semua Video:");
+        user.PrintAllVideoPlayCount();
+        Console.WriteLine($"\nTotal Play Count: {user.GetTotalVideoPlayCount()}");
     }
 }
